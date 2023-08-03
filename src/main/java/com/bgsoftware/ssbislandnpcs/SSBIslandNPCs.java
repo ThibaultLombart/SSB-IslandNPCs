@@ -9,6 +9,7 @@ import com.bgsoftware.superiorskyblock.api.commands.SuperiorCommand;
 import com.bgsoftware.superiorskyblock.api.modules.ModuleLoadTime;
 import com.bgsoftware.superiorskyblock.api.modules.PluginModule;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -23,6 +24,8 @@ public final class SSBIslandNPCs extends PluginModule {
 
     private NPCProvider npcProvider;
 
+    private ConfigurationSection config;
+
     public SSBIslandNPCs() {
         super("IslandNPCs", "Ome_R");
     }
@@ -36,9 +39,15 @@ public final class SSBIslandNPCs extends PluginModule {
         if (this.npcProvider == null)
             throw new IllegalStateException("Cannot find a suitable NPC provider.");
 
+
         this.settingsManager = new SettingsManager(this);
+        this.config = settingsManager.config;
 
         this.npcProvider.loadNPCs();
+    }
+
+    public ConfigurationSection getConfig(){
+        return config;
     }
 
     @Override
@@ -56,6 +65,7 @@ public final class SSBIslandNPCs extends PluginModule {
 
     @Override
     public Listener[] getModuleListeners(SuperiorSkyblock plugin) {
+
         return new Listener[]{new IslandsListener(this)};
     }
 

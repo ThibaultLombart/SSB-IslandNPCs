@@ -21,6 +21,7 @@ allprojects {
     dependencies {
         compileOnly "com.bgsoftware.common.reflection:ReflectionUtils:latest"
         compileOnly "com.bgsoftware:SuperiorSkyblockAPI:2022.9"
+        compileOnly(fileTree("libs") { include("*.jar") })
     }
 
     build {
@@ -40,6 +41,7 @@ dependencies {
 
     compileOnly 'com.bgsoftware.common.config:CommentedConfiguration:1.0.3'
     compileOnly 'com.bgsoftware.common.reflection:ReflectionUtils:latest'
+    compileOnly(fileTree("libs") { include("*.jar") })
 
     // Spigot jars
     compileOnly "org.spigotmc:v1_8_R3-Taco:latest"

@@ -15,10 +15,10 @@ schematics:
     type: PLAYER
     # The name of the NPC.
     # Unlike the display name, this name is for internal usage.
-    name: '%owner%'
+    name: 'John'
     # The display name of the npc.
     # If empty, no custom display name will be shown above the NPC.
-    display-name: ''
+    display-name: 'John'
     # Whether the NPC should look at nearby players.
     look-at-nearby: false
     # Action to be performed when clicking on the entity
@@ -26,3 +26,12 @@ schematics:
       action: 'command'
       commands:
         - 'is admin msg %player% &aWelcome to your island!'
+    selectionNPC: "Vous avez selectionne votre NPC, pour le deplacer veuillez faire sneak+click gauche, pour annuler veuillez faire click gauche."
+    selectionCancel: "§cVous avez annule la selection de votre NPC."
+    selectionInAnotherIsland: "§cVous ne pouvez pas deplacer votre NPC en dehors de votre ile."
+    selectionNPCPlaced: "§aVous avez place votre NPC."
+    noMoreQuest: "§cIl n'y a plus de quête disponible."
+    suffixe-quest: "§6<§eQuests§6> "
+    suffixe-npc: "§6<§eNPC§6> "
+
+    quests: [0,1,2]

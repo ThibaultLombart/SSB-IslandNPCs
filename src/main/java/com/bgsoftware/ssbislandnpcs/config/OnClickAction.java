@@ -14,6 +14,8 @@ public class OnClickAction {
     public OnClickAction(ClickType clickType, ConfigurationSection section) throws InvalidConfigurationException {
         this.clickType = clickType;
 
+
+
         String action = section.getString("action");
         try {
             this.action = Action.valueOf(action.toUpperCase(Locale.ENGLISH));

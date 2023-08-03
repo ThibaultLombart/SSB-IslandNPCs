@@ -20,11 +20,14 @@ public class NPCMetadata {
     public final OnClickAction onLeftClickAction;
     public final OnClickAction onRightClickAction;
 
+
+
     public NPCMetadata(SSBIslandNPCs module, ConfigurationSection section) throws InvalidConfigurationException {
         try {
             String[] spawnOffset = section.getString("spawn-offset", "0, 0, 0").split(", ");
             this.spawnOffset = module.getPlugin().getFactory().createBlockOffset(Integer.parseInt(spawnOffset[0]),
                     Integer.parseInt(spawnOffset[1]), Integer.parseInt(spawnOffset[2]));
+
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException error) {
             throw new InvalidConfigurationException("Spawn offset is not valid");
         }
