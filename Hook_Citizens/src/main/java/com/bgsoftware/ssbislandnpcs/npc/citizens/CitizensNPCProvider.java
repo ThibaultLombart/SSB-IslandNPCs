@@ -235,8 +235,8 @@ public class CitizensNPCProvider implements NPCProvider {
                 PlayerAccount playerAccount = PlayersManager.getPlayerAccount(player);
 
                 while (compteur < liste.size()){
-                    if(!QuestsAPI.getQuests().getQuest(compteur).hasFinished(playerAccount)){
-                        quest = QuestsAPI.getQuests().getQuest(compteur);
+                    if(!QuestsAPI.getQuests().getQuest(liste.get(compteur)).hasFinished(playerAccount)){
+                        quest = QuestsAPI.getQuests().getQuest(liste.get(compteur));
                         break;
                     }
                     compteur ++;
