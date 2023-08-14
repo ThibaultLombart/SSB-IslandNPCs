@@ -97,8 +97,6 @@ public class CitizensNPCProvider implements NPCProvider {
 
         if (!metadata.displayName.isEmpty()) {
             npc.data().setPersistent(NPC.NAMEPLATE_VISIBLE_METADATA, false);
-            HologramTrait trait = npc.getOrAddTrait(HologramTrait.class);
-            metadata.displayName.forEach(trait::addLine);
         }
 
         if (metadata.lookAtNearby) {
