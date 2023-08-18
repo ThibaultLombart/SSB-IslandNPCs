@@ -1,6 +1,7 @@
 package com.bgsoftware.ssbislandnpcs.npc;
 
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 public interface IslandNPC {
@@ -16,5 +17,7 @@ public interface IslandNPC {
     void remove();
 
     void despawn();
+
+    Entity getEntity();
 
 }

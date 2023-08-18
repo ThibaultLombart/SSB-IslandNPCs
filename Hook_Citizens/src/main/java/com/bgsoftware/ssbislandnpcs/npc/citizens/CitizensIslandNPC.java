@@ -4,6 +4,7 @@ import com.bgsoftware.ssbislandnpcs.npc.IslandNPC;
 import net.citizensnpcs.api.event.DespawnReason;
 import net.citizensnpcs.api.npc.NPC;
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
@@ -44,5 +45,10 @@ public class CitizensIslandNPC implements IslandNPC {
     public void despawn() {
         if (this.handle.isSpawned())
             this.handle.despawn(DespawnReason.REMOVAL);
+    }
+
+    @Override
+    public Entity getEntity() {
+        return handle.getEntity();
     }
 }

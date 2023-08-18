@@ -63,6 +63,8 @@ public class CitizensNPCProvider implements NPCProvider {
 
     private ConfigurationSection config;
 
+    private String npcName2 = "";
+
     private String suffixeQuest;
     private String suffixeNPC;
 
@@ -86,6 +88,25 @@ public class CitizensNPCProvider implements NPCProvider {
     public IslandNPC createNPC(Island island, NPCMetadata metadata) {
 
         this.npcName = metadata.npcName;
+
+        if(npcName2.equals("")){
+            String[] listChar = npcName.split("");
+
+            if(!listChar[0].equals("&")){
+                npcName2 = npcName;
+            } else {
+                int compt = 2;
+                while (compt < listChar.length){
+                    if(listChar[compt].equals("&")){
+                        compt += 2;
+                    } else {
+                        npcName2 += listChar[compt];
+                        compt ++;
+                    }
+                }
+            }
+        }
+
         Matcher ownerPlaceholderMatcher = OWNER_PLACEHOLDER_PATTERN.matcher(npcName);
         if (ownerPlaceholderMatcher.find())
             npcName = ownerPlaceholderMatcher.replaceAll(island.getOwner().getName());
@@ -106,6 +127,7 @@ public class CitizensNPCProvider implements NPCProvider {
 
         Location islandLocation = island.getCenter(module.getPlugin().getSettings().getWorlds().getDefaultWorld());
         npc.spawn(metadata.spawnOffset.applyToLocation(islandLocation));
+
 
         return new CitizensIslandNPC(npc);
     }
@@ -161,12 +183,12 @@ public class CitizensNPCProvider implements NPCProvider {
             Island island = superiorPlayer.getIsland();
             SuperiorPlayer superiorPlayerOwner = superiorPlayer.getIslandLeader();
 
-            if(event.getNPC().getName().equals(npcName) && superiorPlayer.equals(superiorPlayerOwner) && player.isSneaking()){
+            if(event.getNPC().getName().equals(npcName2) && superiorPlayer.equals(superiorPlayerOwner) && player.isSneaking()){
 
                 player.sendMessage(suffixeNPC+config.getString("selectionNPC"));
                 playerNPC.put(player,event.getNPC());
 
-            } else if(event.getNPC().getName().equals(npcName)){
+            } else if(event.getNPC().getName().equals(npcName2)){
                 List<Integer> liste = config.getIntegerList("quests");
                 int compteur = 0;
 
@@ -223,7 +245,7 @@ public class CitizensNPCProvider implements NPCProvider {
         @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
         public void onNPCClick(NPCRightClickEvent event) {
 
-            if(event.getNPC().getName().equals(npcName)){
+            if(event.getNPC().getName().equals(npcName2)){
 
                 List<Integer> liste = config.getIntegerList("quests");
                 Player player = event.getClicker();
@@ -277,19 +299,23 @@ public class CitizensNPCProvider implements NPCProvider {
 
                 if(currentBranch.getRegularStage(num) instanceof StageBringBack stageBringBack){
 
-                    Boolean test = stageBringBack.checkItems(player,true);
-                    if(test){
-                        stageBringBack.removeItems(player);
-                        AbstractStage regularStage = quest.getBranchesManager().getPlayerBranch(playerAccount).getRegularStage(num);
-                        if(!questData.isInEndingStages()){
+                    if(stageBringBack.getNPC().getName().equals(npcName2)){
 
-                            currentBranch.finishStage(player,regularStage);
+                        Boolean test = stageBringBack.checkItems(player,true);
+                        if(test){
+                            stageBringBack.removeItems(player);
+                            AbstractStage regularStage = quest.getBranchesManager().getPlayerBranch(playerAccount).getRegularStage(num);
+                            if(!questData.isInEndingStages()){
+
+                                currentBranch.finishStage(player,regularStage);
+                            }
                         }
+
                     }
 
 
                 } else if(currentBranch.getRegularStage(num) instanceof StageNPC stageNPC){
-                    if(stageNPC.getNPC().getName().equals(npcName)){
+                    if(stageNPC.getNPC().getName().equals(npcName2)){
                         AbstractStage regularStage = quest.getBranchesManager().getPlayerBranch(playerAccount).getRegularStage(num);
                         if(!questData.isInEndingStages()){
                             currentBranch.finishStage(player,regularStage);
